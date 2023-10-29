@@ -1,0 +1,53 @@
+
+<div class="container-fluid p-4">
+    <div class="text-center  mb-3 d-flex border-bottom  justify-content-between "><p class="dialogueTitle">ADD CREDENTIALS</p><mat-icon class="cursorPointer" (click)="closeDialogue()">cancel</mat-icon></div>
+
+
+        <mat-form-field appearance="outline" class="w-100">
+            <mat-label >Select Promo</mat-label>
+            <mat-select [(ngModel)]="promoID">
+                <mat-option><ngx-mat-select-search [(ngModel)]="searchPromo"
+                    [placeholderLabel]="'Search...'" [noEntriesFoundLabel]="'Not found'"
+                    name="search"></ngx-mat-select-search></mat-option>
+                <mat-option *ngFor="let item of promoList" [value]="item.promoID">{{item.promoTitle}} - ({{item.discountPercentage}}%)</mat-option>
+            </mat-select>
+        </mat-form-field>
+        <mat-form-field appearance="outline" class="w-100">
+            <mat-label >Select Company</mat-label>
+            <mat-select [(ngModel)]="companyID">
+                <mat-option><ngx-mat-select-search [(ngModel)]="searchCompany"
+                    [placeholderLabel]="'Search...'" [noEntriesFoundLabel]="'Not found'"
+                    name="search"></ngx-mat-select-search></mat-option>
+                <mat-option *ngFor="let item of companyList" [value]="item.companyID">{{item.companyName}}</mat-option>
+            </mat-select>
+        </mat-form-field>
+
+
+        <mat-form-field class="w-100" appearance="outline">
+            <mat-label>Start Date</mat-label>
+            <input readonly="true" matInput   [(ngModel)]="startDate"
+                [matDatepicker]="sDate" >
+            <mat-datepicker-toggle matSuffix [for]="sDate"></mat-datepicker-toggle>
+            <mat-datepicker #sDate></mat-datepicker>
+        </mat-form-field>
+
+        <mat-form-field class="w-100" appearance="outline">
+            <mat-label>End Date</mat-label>
+            <input readonly="true" matInput   [(ngModel)]="endDate"
+                [matDatepicker]="eDate" >
+            <mat-datepicker-toggle matSuffix [for]="eDate"></mat-datepicker-toggle>
+            <mat-datepicker #eDate></mat-datepicker>
+        </mat-form-field>
+
+
+        <div class="text-center">
+
+            <button mat-raised-button class="bg-success text-white me-2" (click)="insertCompanyPromo()">Save</button>
+            <button mat-raised-button  color="warn" (click)="reset()">Reset</button>
+
+        </div>
+
+
+
+</div>
+

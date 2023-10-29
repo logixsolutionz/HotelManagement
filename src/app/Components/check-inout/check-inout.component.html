@@ -1,0 +1,688 @@
+<mat-tab-group class="col-lg-12 container-fluid">
+    <mat-tab label="Check IN Form">
+        <div class=" container-fluid p-4 d-flex">
+
+
+
+            <div>
+
+                <div class="row">
+                    <div class="w-75">
+
+                        <mat-form-field appearance="outline" class="col-lg-3 p-2s">
+                            <mat-label>Select Booking</mat-label>
+                            <mat-select [(ngModel)]="bookingID" (selectionChange)="onBookingChange();getTotal()">
+                                <mat-option><ngx-mat-select-search [(ngModel)]="bookingSearch"
+                                        [placeholderLabel]="'Search...'"
+                                        [noEntriesFoundLabel]="'Not found'"></ngx-mat-select-search></mat-option>
+                                <mat-option *ngFor="let item of bookingList |filter:bookingSearch"
+                                    [value]="item.bookingID">{{item.bookingID}} - {{item.partyName}}
+                                    ({{item.partyCNIC}})</mat-option>
+                            </mat-select>
+                        </mat-form-field>
+
+                        <mat-form-field appearance="outline" class="col-lg-3  p-2">
+                            <mat-label>Select Promo </mat-label>
+                            <mat-select [disabled]="bookingID != 0" [(ngModel)]="companyPromoID" (selectionChange)="getTotal();onPromoChange()">
+                                <mat-option><ngx-mat-select-search [(ngModel)]="promoSearch"
+                                        [placeholderLabel]="'Search...'"
+                                        [noEntriesFoundLabel]="'Not found'"></ngx-mat-select-search></mat-option>
+                                <mat-option [disabled]="item.onRentStatus == true"
+                                    *ngFor="let item of companyPromoList|filter:promoSearch"
+                                    [value]="item.companyPromoID">{{item.companyPromoID}} - {{item.companyName}} ({{item.discountPercentage}}%)</mat-option>
+                            </mat-select>
+                        </mat-form-field>
+
+                        <mat-form-field appearance="outline" class="col-lg-3  p-2">
+                            <mat-label>Select Room </mat-label>
+                            <mat-select [disabled]="bookingID != 0" [(ngModel)]="roomID" (selectionChange)="onRoomChange();onPromoChange(); getTotal()">
+                                <mat-option><ngx-mat-select-search [(ngModel)]="roomSearch"
+                                        [placeholderLabel]="'Search...'"
+                                        [noEntriesFoundLabel]="'Not found'"></ngx-mat-select-search></mat-option>
+                                <mat-option [disabled]="item.onRentStatus == true"
+                                    *ngFor="let item of roomList|filter:roomSearch"
+                                    [value]="item.roomID">{{item.roomTitle}}</mat-option>
+                            </mat-select>
+                        </mat-form-field>
+
+                        <mat-form-field appearance="outline" class="col-lg-2 p-1"  >
+                            <mat-label>Select Customer </mat-label>
+                            <mat-select [disabled]="bookingID != 0" [(ngModel)]="partyID">
+                                <mat-option><ngx-mat-select-search [(ngModel)]="partySearch"
+                                        [placeholderLabel]="'Search...'"
+                                        [noEntriesFoundLabel]="'Not found'"></ngx-mat-select-search></mat-option>
+                                <mat-option *ngFor="let item of partyList|filter:partySearch"
+                                    [value]="item.partyID">{{item.partyName}} ({{item.partyCNIC}})</mat-option>
+                            </mat-select>
+                        </mat-form-field>
+
+                        <button class="btn btn-primary col-lg-1 " style="height: 55px;"
+                        (click)="addCustomer()"> <mat-icon>add</mat-icon></button>
+            
+
+                       
+
+
+
+                        <mat-form-field class="col-lg-3   p-2" appearance="outline">
+                            <mat-label>Select Check IN Date</mat-label>
+                            <input readonly="true" (dateChange)="getTotalDays()" matInput [(ngModel)]="checkInDate" [matDatepicker]="ciDate">
+                            <mat-datepicker-toggle matSuffix [for]="ciDate"></mat-datepicker-toggle>
+                            <mat-datepicker #ciDate></mat-datepicker>
+                        </mat-form-field>
+
+
+                        <mat-form-field appearance="outline" class="col-lg-3 p-2">
+                            <mat-label>Check IN time</mat-label>
+                            <input type="time" (change)="getTotalDays()" matInput [(ngModel)]="checkInTime" name="week" min="00:00:00"
+                                max="24:00:00" />
+
+                        </mat-form-field>
+
+                        <mat-form-field class="col-lg-3 p-2" appearance="outline">
+                            <mat-label>Select Check Out Date</mat-label>
+                            <input readonly="true" (dateChange)="getTotalDays()" matInput [(ngModel)]="checkOutDate" [matDatepicker]="coDate">
+                            <mat-datepicker-toggle matSuffix [for]="coDate"></mat-datepicker-toggle>
+                            <mat-datepicker #coDate></mat-datepicker>
+                        </mat-form-field>
+
+
+                        <mat-form-field appearance="outline" class="col-lg-3  p-2">
+                            <mat-label>Check Out time</mat-label>
+                            <input type="time" (change)="getTotalDays()" matInput [(ngModel)]="checkOutTime" name="week" min="00:00:00"
+                                max="24:00:00" />
+
+                        </mat-form-field>
+
+
+                        <mat-form-field appearance="outline" class="col-lg-3  p-2">
+                            <mat-label>Enter Rent Per Day</mat-label>
+                            <input matInput [disabled]="RoleID == 3" type="number" min="0" [(ngModel)]="rentPerDay"
+                                (keypress)="numberOnly($event)">
+
+                        </mat-form-field>
+
+                        <mat-form-field appearance="outline" class="col-lg-3 p-2">
+                            <mat-label>Dicounted Rent Per Day</mat-label>
+                            <input type="number" [disabled]="true" min="0" (keyup)="getTotal()" (keypress)="numberOnly($event)" matInput
+                                [(ngModel)]="discountedRPD" />
+
+                        </mat-form-field>
+
+                        <mat-form-field appearance="outline" class="col-lg-3  p-2">
+                            <mat-label>Total Days</mat-label>
+                            <input type="number" [disabled]="true" min="0" (keyup)="getTotal()" (keypress)="numberOnly($event)" matInput
+                                [(ngModel)]="totalDays" />
+
+                        </mat-form-field>
+
+                        <mat-form-field appearance="outline" class="col-lg-3 p-2">
+                            <mat-label>Estimated Days</mat-label>
+                            <input type="number" min="0" (keypress)="numberOnly($event)" matInput
+                                [(ngModel)]="estimatedDays" />
+
+                        </mat-form-field>
+
+                       
+
+
+                        <mat-form-field appearance="outline" class="col-lg-3  p-2">
+                            <mat-label>Advance Amount</mat-label>
+                            <input type="number" min="0" (keypress)="numberOnly($event)" matInput
+                                [(ngModel)]="advanceAmount" />
+
+                        </mat-form-field>
+
+                        <mat-form-field appearance="outline" class="col-lg-3 p-2">
+                            <mat-label>Booking Advance</mat-label>
+                            <input type="number" [disabled]="true" min="0" (keypress)="numberOnly($event)" matInput
+                                [(ngModel)]="bookingAdvance" />
+
+                        </mat-form-field>
+
+                        <mat-form-field appearance="outline" class="col-lg-3 p-2s">
+                            <mat-label>Select COA Title</mat-label>
+                            <mat-select [(ngModel)]="coaID" [disabled]="advanceAmount == 0 || advanceAmount == null">
+                                <mat-option><ngx-mat-select-search [(ngModel)]="coaSearch"
+                                        [placeholderLabel]="'Search...'"
+                                        [noEntriesFoundLabel]="'Not found'"></ngx-mat-select-search></mat-option>
+                                <mat-option [disabled]="item.coaTitle == 'Cash In Hand'" *ngFor="let item of coaList" [value]="item.coaID">{{item.coaTitle}}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+
+
+
+
+                    </div>
+
+
+                    <!-------------  Total Section ------------------>
+
+                    <div class="w-25 border-start mb-1  ">
+
+
+                        <mat-card class="h-100 p-5 " style="background-color: rgb(248, 248, 248);">
+                            <h1 class="text-center text-dark" style="font-size: 50px;">Total</h1>
+
+                            <h1 class="text-center text-danger pt-5" style="font-size: 50px;">{{billTotal
+                                |number:'1.0-1'}}</h1>
+                        </mat-card>
+
+                    </div>
+                </div>
+
+
+
+                <mat-card class="p-3 ">
+                    <div>
+                        <p class="dialogueTitle">ADD SERVICES</p>
+                    </div>
+                    <div>
+                        <mat-form-field appearance="outline" class="col-lg-3 p-2">
+                            <mat-label>Select Service</mat-label>
+                            <mat-select [(ngModel)]="serviceID" (selectionChange)="onServiceSeleted();">
+                                <mat-option><ngx-mat-select-search [(ngModel)]="serviceSearch"
+                                        [placeholderLabel]="'Search...'"
+                                        [noEntriesFoundLabel]="'Not found'"></ngx-mat-select-search></mat-option>
+                                <mat-option *ngFor="let item of servicesList |filter:serviceSearch"
+                                    [value]="item.serviceID">{{item.serviceTitle}} </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+
+                        <mat-form-field appearance="outline" class="col-lg-2 p-2">
+                            <mat-label>Amount</mat-label>
+                            <input type="number" min="1" (keypress)="numberOnly($event)" matInput
+                                [(ngModel)]="amountCharged" />
+
+                        </mat-form-field>
+
+                        <mat-form-field appearance="outline" class="col-lg-2 p-2">
+                            <mat-label>Quantity</mat-label>
+                            <input type="number" min="1" (keypress)="numberOnly($event)" matInput
+                                [(ngModel)]="quantity" />
+
+                        </mat-form-field>
+
+                        <mat-form-field class="col-lg-2  p-2" appearance="outline">
+                            <mat-label>Service Date</mat-label>
+                            <input readonly="true" matInput [(ngModel)]="serviceDate" [matDatepicker]="serDate">
+                            <mat-datepicker-toggle matSuffix [for]="serDate"></mat-datepicker-toggle>
+                            <mat-datepicker #serDate></mat-datepicker>
+                        </mat-form-field>
+
+
+                        <mat-form-field appearance="outline" class="col-lg-2 p-2">
+                            <mat-label>Service time</mat-label>
+                            <input type="time" matInput [(ngModel)]="serviceTime" name="week" min="00:00:00"
+                                max="24:00:00" />
+
+                        </mat-form-field>
+
+                        <button class="btn btn-success btn-rpt cursorPointer"
+                            (click)="addService()"><mat-icon>save</mat-icon></button>
+
+                    </div>
+
+                    <div>
+                        <table class="table">
+                            <thead>
+                                <th>S#</th>
+                                <th>Service Title</th>
+                                <th>Amount Charged</th>
+                                <th>Qty</th>
+                                <th>Total</th>
+                                <th>Date Time</th>
+                                <th>Action</th>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let item of serviceTableList index as index">
+                                    <td>{{index+1}}</td>
+                                    <td>{{item.serviceTitle}}</td>
+                                    <td>{{item.AmountCharged |number:'1.0-1'}}</td>
+                                    <td>{{item.Quantity |number}}</td>
+                                    <td>{{item.AmountCharged * item.Quantity |number:'1.0-1'}}</td>
+                                    <td>{{item.ServiceDate | date:'yyyy-MM-dd'}} ({{item.ServiceTime}})</td>
+                                    <td (click)="deleteService(item)"><mat-icon
+                                            class="text-danger cursorPointer">delete</mat-icon></td>
+                                </tr>
+                                <tr *ngIf="serviceTableList != ''">
+                                    <th colspan="4"> Total</th>
+                                    <th>{{servicesTotalAmount | number:'1.0-1'}}</th>
+                                    <td colspan="2"></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+
+
+                </mat-card>
+
+
+
+
+
+
+
+
+                <mat-form-field appearance="outline" class="w-50 p-2">
+                    <mat-label>Family Information</mat-label>
+                    <textarea type="text" matInput [(ngModel)]="familyInfo"></textarea>
+
+                </mat-form-field>
+
+                <mat-form-field appearance="outline" class="w-50 p-2">
+                    <mat-label>Remarks</mat-label>
+                    <textarea type="text" matInput [(ngModel)]="cioRemarks"></textarea>
+
+                </mat-form-field>
+
+
+                <div class="text-center ">
+                    <button class="btn btn-success btn-save w-25 me-2" (click)="saveCheckIN()"> Save</button>
+                    <button class="btn btn-danger btn-reset w-25" (click)="reset()"> Reset</button>
+                </div>
+
+
+            </div>
+
+
+
+
+
+        </div>
+
+
+
+
+    </mat-tab>
+
+    <mat-tab label="Saved Record">
+
+        <div class="container-fluid bg-light ">
+
+            <mat-form-field appearance="outline" class="w-75 pt-2">
+                <mat-label>Search.....</mat-label>
+                <input type="text" matInput [(ngModel)]="searchText">
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" class="w-25 ps-2">
+                <mat-label>Select Type</mat-label>
+                <mat-select [(ngModel)]="voucherType" (selectionChange)="filterSavedVouchers()">
+                    <mat-option *ngFor="let item of voucherTypesList" [value]="item.title">{{item.title}}</mat-option>
+                </mat-select>
+            </mat-form-field>
+
+
+            <hr>
+
+            <div>
+                <mat-progress-bar mode="indeterminate" *ngIf="loadingBar == 'start'"></mat-progress-bar>
+                <table class="table">
+                    <thead>
+                        <th>S#</th>
+                        <th>ID</th>
+                        <th>Room Title</th>
+                        <th>Customer Name</th>
+                        <th>Promo</th>
+                        <th>Check In Date</th>
+                        <th  *ngIf="voucherType == 'Check Out'">Check Out Date</th>
+                        <th>Amount</th>
+                        <th>Remarks</th>
+                        <th class="text-center" *ngIf="voucherType == 'Check In'">ADD Service</th>
+                        <th class="text-center"> Add Documents</th>
+                        <th class="text-center" *ngIf="voucherType == 'Check In'">ADD Payment</th>
+                        
+                        <th class="text-center" *ngIf="voucherType == 'Check In'"> Check Out</th>
+
+                        <th class="text-center">Actions</th>
+                        <th  class="text-center" *ngIf="voucherType == 'Check Out'">C Print</th>
+
+                       
+                    </thead>
+                    <tbody>
+                        <tr
+                            *ngFor="let item of checkInOutList |filter: searchText |paginate:{ id:'voucherData', itemsPerPage : tableSize,currentPage : page, totalItems : count, }   index as index">
+                            <td>{{index+1}}</td>
+                            <td>{{item.checkinoutID}}</td>
+                            <td>{{item.roomTitle}}</td>
+                            <td>{{item.partyName}} ({{item.partyCNIC}})</td>
+                            <td>{{item.promoTitle}}</td>
+                            <td>{{item.checkInDate | date:'short'}}</td>
+                            <td *ngIf="item.activeStatus == false">{{item.checkOutDate | date:'short'}}</td>
+
+                            <td>{{(item.rentPerDay * item.totalDays) + (item.servicesTotalAmount) |number:'1.0-0'}}</td>
+                            <td>{{item.cioRemarks}}</td>
+                            <td *ngIf="item.activeStatus == true" class="text-success text-center cursorPointer "
+                                (click)="addNewService(item)"><mat-icon>add_box</mat-icon></td>
+                            <td class="text-primary text-center cursorPointer " (click)="addDocuments(item)">
+                               <mat-icon>add_photo_alternate</mat-icon></td>
+                                <td *ngIf="item.activeStatus == true" class="text-success text-center cursorPointer "
+                                (click)="AddPayment(item)"> <mat-icon>payment</mat-icon></td>
+
+                            <td *ngIf="item.activeStatus == true" class="text-warning text-center cursorPointer "
+                                (click)="checkOut(item)"><mat-icon>check_box</mat-icon></td>
+                            
+
+                            <td class="cursorPointer text-center ">
+                                <mat-icon class="text-success" (click)="getCioVoucherDetails(item)">receipt</mat-icon>
+                                <mat-icon class="text-primary" (click)="print(item)">print</mat-icon>
+
+                            </td>
+                            <td *ngIf="item.activeStatus == false" class="cursorPointer text-center ">
+                                <mat-icon  class="text-warning  " (click)="printCIO(item)">print</mat-icon>
+
+                            </td>
+
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div class="d-flex">
+                    
+                    <mat-hint class="me-1 text-secondary">Total Rows : ({{checkInOutList.length}}) </mat-hint>
+                    <pagination-controls previousLabel="Prev" nextLabel="Next"
+                        (pageChange)="onTableDataChange($event)"></pagination-controls>
+
+
+                    <mat-hint class=" me-1 text-secondary">Rows Per Page </mat-hint>
+                    <select class="text-white" style="width: 50px; height: 25px;background-color: rgb(75, 164, 248);"
+                        (change)="onTableSizeChange($event)">
+                        <option *ngFor=" let item of tableSizes">{{item}}</option>
+                    </select>
+
+                </div>
+            </div>
+
+
+
+        </div>
+
+
+        <!-------------- Check In Out Bill print including Details ----------------->
+
+        <div id="printDiv" class="d-none">
+
+
+
+
+            <!-- <div class="text-end ">{{lblVoucherPrintDate |date:'short'}}</div> -->
+            <!-------------------------    Top Logo Section -------------------->
+            <div class="text-center border-bottom d-flex justify-content-between">
+                <span>
+                    <img src="{{logo}}" style="color: black;" alt="" srcset="" height="100" width="100">
+                </span>
+                <span class="mt-3">
+                    <h3>{{CompanyName}}</h3>
+                    <p class="w-75 text-end" style="margin-top: -15;">{{CompanyName2}}</p>
+                    <p style="margin-top: -20;">{{companyAddress}}</p>
+                    <p style="margin-top: -15;">{{companyPhone}} - {{companyMobileno}}</p>
+                    <p style="margin-top: -15;">{{companyEmail}}</p>
+                </span>
+                <span>
+                    <img src="{{logo1}}" style="color: black;" alt="" srcset="" height="100" width="100">
+                </span>
+
+
+            </div>
+
+            <div class="me-1">
+                <div class="d-flex">
+                    <div class="row mt-5">
+
+                        <span class="w-50 row ">
+                            <h6 class="w-50 fw-bold border-dark">Voucher No :</h6>
+                            <p class="w-50">{{lblVoucherNo}}</p>
+                        </span>
+
+                        <span class="w-50 row ">
+                            <h6 class="w-50 fw-bold border-dark">Booking ID:</h6>
+                            <p class="w-50">{{lblBookingID}}</p>
+                        </span>
+
+                        <span class="w-50 row ">
+                            <h6 class="w-50 fw-bold border-dark">Check In Date:</h6>
+                            <p class="w-50">{{lblArrivalDate | date:'short'}}</p>
+                        </span>
+
+                        <span class="w-50 row ">
+                            <h6 class="w-50 fw-bold border-dark">Check Out Date:</h6>
+                            <p class="w-50">{{lblDepartureDate | date:'short'}}</p>
+                        </span>
+                        <span class="w-50 row " *ngIf="lblCompanyName !== '-'">
+                            <h5 class="w-50 fw-bold border-dark">Company Name:</h5>
+                            <p class="w-50">{{lblCompanyName }}</p>
+                        </span>
+                        <span class="w-50 row " *ngIf="lblPromoTitle !== '-'">
+                            <h5 class="w-50 fw-bold border-dark">Promo:</h5>
+                            <p class="w-50">{{lblPromoTitle }}  </p>
+                        </span>
+                        <span class="w-50 row " *ngIf="lblDiscountPercentage !== 0">
+                            <h5 class="w-50 fw-bold border-dark">Discount:</h5>
+                            <p class="w-50">{{lblDiscountPercentage}}%  </p>
+                        </span>
+
+                        <span class="w-50 row ">
+                            <h6 class="w-50 fw-bold border-dark">Customer Name:</h6>
+                            <p class="w-50">{{lblPartyName }}</p>
+                        </span>
+                        
+                        <span class="w-50 row ">
+                            <h6 class="w-50 fw-bold border-dark">Customer CNIC:</h6>
+                            <p class="w-50">{{lblPartyCNIC }}</p>
+                        </span>
+                        <span class="w-50 row ">
+                            <h6 class="w-50 fw-bold border-dark">Customer CNIC:</h6>
+                            <p class="w-50">{{lblPartyMobileno }}</p>
+                        </span>
+
+
+
+                    </div>
+
+
+                </div>
+
+                <!---------------------- Room Talbe ----------------->
+
+                <div>
+                    <div class="text-center border border-dark">
+                        <h3>Room Details</h3>
+                    </div>
+                    <table class="table table-logix">
+                        <thead>
+                            <th>S#</th>
+                            <th>Description</th>
+                            <th>Days</th>
+                            <th >Rent</th>
+                            <th *ngIf="lblPromoTitle !== '-'">Charged</th>
+                            <th>Total</th>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>1</td>
+                                <td>{{lblRoomNo}}</td>
+                                <td class="text-end">{{lblTotalDays |number}}</td>
+                                <td class="text-end" *ngIf="lblPromoTitle !== '-'"> {{lblrpDwithoutDP |number:'1.0-0'}}</td>
+                                <td class="text-end">{{lblRentPerDay |number:'1.0-0'}}</td>
+                                <td class="text-end"> {{lblTotalDays * lblRentPerDay |number:'1.0-0'}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+
+
+                <!---------------------- Services Talbe ----------------->
+
+                <div *ngIf="lblServiceList != ''">
+
+                    <div class=" col-lg-10 text-center " style="border: 1px solid black;">
+                        <h3>Services Detail</h3>
+                    </div>
+
+                    <table class="table table-logix">
+                        <thead>
+                            <th>S#</th>
+                            <th>Description</th>
+                            <th>Date</th>
+                            <th>Qty</th>
+                            <th>Amount</th>
+                            <th>Total</th>
+                            
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let item of lblServiceList index as index">
+                                <td>{{index+1}}</td>
+                                <td>{{item.serviceTitle}}</td>
+                                <td>{{item.serviceDate |date:'short'}}</td>
+                                <td class="text-end">{{item.quantity |number}}</td>
+                                <td class="text-end">{{item.amountCharged |number:'1.0-0'}}</td>
+                                <td class="text-end">{{item.amountCharged * item.quantity |number:'1.0-0'}}</td>
+                            
+
+                            </tr>
+                            <tr>
+                                <td class="fw-bold text-center" colspan="5">Total</td>     
+                                <td class="fw-bold text-end">{{lblServicesAmount |number:'1.0-0'}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+
+
+
+                <span class="row text-end  border-bottom border-dark mb-1 ">
+                    <h4 class="w-75 fw-bold">Total</h4>
+                    <h4 class="w-25 text-end">{{lblRentPerDay * lblTotalDays + lblServicesAmount |number:'1.0-0'}}</h4>
+                </span>
+
+                <div *ngIf=" lblDiscount != 0">
+                    <span class="row text-end  border-bottom border-dark mb-1" *ngIf="lblActiveStatus == false">
+                        <h4 class="w-75 fw-bold ">Discount</h4>
+                        <h4 class="w-25 text-end">{{lblDiscount|number:'1.0-0'}}</h4>
+                    </span>
+                </div>
+
+                <span class="row text-end   border-bottom border-dark mb-1" *ngIf="lblActiveStatus == false">
+                    <h4 class="w-75 fw-bold ">Net Total</h4>
+                    <h4 class="w-25 text-end">{{(lblRentPerDay * lblTotalDays + lblServicesAmount) -
+                        lblDiscount|number:'1.0-0'}}</h4>
+                </span>
+
+
+            </div>
+
+
+
+        </div>
+
+
+
+<!-------------- Check Out Print with Comment Card ----------------->
+
+
+        <div id="print2" class="d-none">
+
+
+
+
+           
+            <!-------------------------    Top Logo Section -------------------->
+            <div class="text-center border-bottom d-flex justify-content-between">
+                <span>
+                    <img src="{{logo}}" style="color: black;" alt="" srcset="" height="100" width="100">
+                </span>
+                <span class="mt-3">
+                    <h3>{{CompanyName}}</h3>
+                    <p class="w-75 text-end" style="margin-top: -15;">{{CompanyName2}}</p>
+                    <p style="margin-top: -20;">{{companyAddress}}</p>
+                    <p style="margin-top: -15;">{{companyPhone}} - {{companyMobileno}}</p>
+                    <p style="margin-top: -15;">{{companyEmail}}</p>
+                </span>
+                <span>
+                    <img src="{{logo1}}" style="color: black;" alt="" srcset="" height="100" width="100">
+                </span>
+
+
+            </div>
+
+
+           
+                <div class="me-1 mt-2">
+
+                    <table class="table table-logix">
+                        <!-- <thead>
+                            <th  ></th>
+                            <th > </th>
+                        </thead> -->
+                       <tbody>
+                        <tr>
+                            <td class="fw-bold" >Voucher No :</td>
+                            <td>{{lblVoucherNo}}</td>
+                        </tr>
+                        <tr >
+                            <td class="fw-bold">Customer Name:</td>
+                            <td>{{lblPartyName }}</td>
+                        </tr>
+                        <tr >
+                            <td class="fw-bold">Customer CNIC:</td>
+                            <td>{{lblPartyCNIC }}</td>
+                        </tr>
+                        <tr >
+                            <td class="fw-bold">Contact No:</td>
+                            <td>{{lblPartyMobileno }}</td>
+                        </tr>
+
+                        <tr >
+                            <td class="fw-bold">Check In:</td>
+                            <td>{{lblArrivalDate | date:'short'}}</td>
+                        </tr>
+
+                        <tr >
+                            <td class="fw-bold">Check Out:</td>
+                            <td>{{lblDepartureDate | date:'short'}}</td>
+                        </tr>
+
+                        <tr >
+                            <td class="fw-bold">Total Days:</td>
+                            <td>{{lblTotalDays |number}}</td>
+                        </tr>
+
+                        <tr>
+                            <td class="fw-bold">Charges:</td>
+                            <td>{{lblRentPerDay * lblTotalDays + lblServicesAmount |number:'1.0-0'}}</td>
+                        </tr>
+                       </tbody>
+                    </table>
+
+
+
+                </div>
+
+
+            
+                <div >
+                    <h3 class="mt-5"  style="text-wrap: wrap;line-height: 55px;">Comments:____________________________________________________________________________________________
+                        ___________________________________________________________________________________________________________________________
+                        ___________________________________________________________________________________________________________________________
+                        ___________________________________________________________________________________________________________________________
+                        ___________________________________________________________________________________________________________________________
+                    _______________________________________________________________________________________________________________________________                    </h3>
+                </div>
+
+
+
+                <div class="text-end pt-5 mt-5 ">
+                    <h3>Guest Signature : ____________________________</h3>
+                </div>
+
+        </div>
+
+
+
+
+    </mat-tab>
+</mat-tab-group>

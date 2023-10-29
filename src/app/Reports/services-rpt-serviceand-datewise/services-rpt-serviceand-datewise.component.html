@@ -1,0 +1,105 @@
+<div>
+    <!----------------           Date Section ------------------------------->
+    <div class="row  p-2">
+
+        <mat-form-field class="col-lg-5 " appearance="outline">
+            <mat-label>Select Service</mat-label>
+            <mat-select [(ngModel)]="serviceID">
+                <mat-option><ngx-mat-select-search [(ngModel)]="txtSearch"
+                    [placeholderLabel]="'Search...'" [noEntriesFoundLabel]="'Not found'"
+                    name="search"></ngx-mat-select-search></mat-option>
+                <mat-option *ngFor="let item of servicesList |filter:txtSearch" [value]="item.serviceID">{{item.serviceTitle}}</mat-option>
+            </mat-select>
+        </mat-form-field>
+
+
+
+       <mat-form-field class="col-lg-2 " appearance="outline">
+           <mat-label>From Date</mat-label>
+           <input matInput type="text" readonly="true" [(ngModel)]="fromDate" [matDatepicker]="sDate">
+           <mat-datepicker-toggle matSuffix [for]="sDate"></mat-datepicker-toggle>
+           <mat-datepicker #sDate></mat-datepicker>
+       </mat-form-field>
+
+       <mat-form-field class="col-lg-2" appearance="outline">
+           <mat-label>To Date</mat-label>
+           <input matInput type="text" readonly="true" [(ngModel)]="toDate" [matDatepicker]="eDate">
+           <mat-datepicker-toggle matSuffix [for]="eDate"></mat-datepicker-toggle>
+           <mat-datepicker #eDate></mat-datepicker>
+       </mat-form-field>
+
+
+       <div class="col-lg-3 d-flex text-end">
+        <button class=" btn btn-success me-2 btn-rpt" (click)="getReport()">Report 1</button>
+        <button class=" btn btn-success me-2 btn-rpt" (click)="getReport2()" >Report 2</button>
+        <button class=" btn btn-primary me-2 btn-rpt" (click)="print()"> Print</button>
+    </div>
+   </div>
+
+   <div id="printDiv" class="container-fluid">
+
+       <!-------------- logo Section ----------------->
+
+       <div class="hide">
+           <div class="text-center d-flex justify-content-between">
+               <span>
+                   <img src="{{logo}}" style="color: black;" alt="" srcset="" height="100" width="100">
+               </span>
+               <span >
+                   
+
+                   <h1 class="companyName" >{{CompanyName}}</h1>
+                   <p style="margin-top: -15px;" class="companyName2">{{CompanyName2}}</p>
+                   <p class="rptTitle" style="margin-top: -25px;">Services Report</p>   
+                   <p style="margin-top:-20px"><b>From:</b> {{fromDate | date:'yyyy-MM-dd'}} <b>To:</b> {{toDate | date:'yyyy-MM-dd'}}</p>
+                 
+               </span>
+               <span>
+                   <img src="{{logo1}}" style="color: black;" alt="" srcset="" height="100" width="100">
+               </span>
+
+
+           </div>
+       </div>
+<hr>
+
+
+       <div>
+           <table class="table table-logix">
+               <thead>
+                   <th>S#</th>
+                   <th>Voucher No</th>
+                   <th>Service Title</th>
+                   <th>Date</th>
+                   <th >Quantity</th>
+                   <th >Service Charges</th>
+                   <th >Amount Charged</th>
+                   <th >Total</th>
+
+               </thead>
+
+               <tbody>
+                   <tr *ngFor="let item of allServicesData index as index">
+                       <td class="text-center">{{index +1}}</td>
+                       <td (click)="getDetails(item)" ><span class=" cursorPointer text-primary border-bottom border-primary">{{item.checkinoutID}}</span></td>
+                       <td>{{item.serviceTitle}}</td>
+                       <td>{{item.serviceDate | date:'short'}}</td>
+                       <td class="text-center">{{item.quantity |number}}</td>
+                       <td class="text-end">{{item.serviceCharges |number:'1.0-0'}}</td>
+                       <td class="text-end">{{item.amountCharged |number:'1.0-0'}}</td>
+                       <td class="text-end">{{item.quantity * item.amountCharged |number:'1.0-0'}}</td>
+                   </tr>
+                 
+                   <tr >
+                       <td colspan="4" class="text-center fw-bold">Total</td>
+                       <td class="text-center fw-bold">{{totalQuantity |number}}</td>
+                       <td class="text-end fw-bold">{{totalServiceCharges |number:'1.0-0'}}</td>
+                       <td class="text-end fw-bold">{{totalAmountCharges |number:'1.0-0'}}</td>
+                       <td class="text-end fw-bold">{{totalAmount |number:'1.0-0'}}</td>
+                   </tr>
+               </tbody>
+
+           </table>
+       </div>
+   </div>
+</div>

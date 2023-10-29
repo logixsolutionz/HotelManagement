@@ -1,0 +1,193 @@
+<div class="container-fluid  p-3" style="overflow: scroll; max-height: 600px;">
+    
+    <div class="d-flex justify-content-between cursorPointer p-2 border-bottom">
+        <p class="dialogueTitle">CIO VOUCHER DETAILS</p>
+        <mat-icon (click)="closeDialogue()">cancel</mat-icon>
+    </div>
+    
+<div class="d-flex">
+    <div class="row mt-5"  >
+
+        <span class="w-50 row ">
+            <h5 class="w-50 fw-bold border-dark">Voucher No :</h5>
+            <p class="w-50">{{lblVoucherNo}}</p>
+        </span>
+
+        <span class="w-50 row ">
+            <h5 class="w-50 fw-bold border-dark">Booking ID:</h5>
+            <p class="w-50">{{lblBookingID}}</p>
+        </span>
+
+        <span class="w-50 row ">
+            <h5 class="w-50 fw-bold border-dark">Check In Date:</h5>
+            <p class="w-50">{{lblArrivalDate | date:'short'}}</p>
+        </span>
+
+        <span class="w-50 row ">
+            <h5 class="w-50 fw-bold border-dark">Check Out Date:</h5>
+            <p class="w-50">{{lblDepartureDate | date:'short'}}</p>
+        </span>
+
+        <span class="w-50 row " *ngIf="lblCompanyName !== '-'">
+            <h5 class="w-50 fw-bold border-dark">Company Name:</h5>
+            <p class="w-50">{{lblCompanyName }}</p>
+        </span>
+        <span class="w-50 row " *ngIf="lblPromoTitle !== '-'">
+            <h5 class="w-50 fw-bold border-dark">Promo:</h5>
+            <p class="w-50">{{lblPromoTitle }}  </p>
+        </span>
+        <span class="w-50 row " *ngIf="lblDiscountPercentage !== 0">
+            <h5 class="w-50 fw-bold border-dark">Discount:</h5>
+            <p class="w-50">{{lblDiscountPercentage}}%  </p>
+        </span>
+    
+        <span class="w-50 row ">
+            <h5 class="w-50 fw-bold border-dark">Customer CNIC:</h5>
+            <p class="w-50">{{lblPartyCNIC }}</p>
+        </span>
+
+
+        <span class="w-50 row ">
+            <h5 class="w-50 fw-bold border-dark">Mobile No:</h5>
+            <p class="w-50">{{lblPartyMobileno }}</p>
+        </span>
+
+        
+
+    </div>
+
+    
+   </div>
+
+      <!---------------------- Room Talbe ----------------->
+   
+   <div>
+    <div class="text-center border border-dark">
+        <h3 class="fw-bold">Room Details</h3>
+    </div>
+    <table class="table table-logix">
+        <thead>
+          <tr>
+            <th>S#</th>
+            <th>Description</th>
+            <th>Days</th>
+            <th >Rent</th>
+            <th *ngIf="lblPromoTitle !== '-'">Charged</th>
+            <th>Total</th>
+          </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td class="text-center">1</td>
+                <td>{{lblRoomNo}}</td>
+                <td class="text-center ">{{lblTotalDays |number}}</td>
+                <td class="text-end" *ngIf="lblPromoTitle !== '-'"> {{lblrpDwithoutDP |number:'1.0-0'}}</td>
+                <td class="text-end"> {{lblRentPerDay |number:'1.0-0'}}</td>
+                <td class="text-end">{{lblTotalDays * lblRentPerDay |number:'1.0-0'}}</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+
+
+<!---------------------- Services Talbe ----------------->
+
+<div *ngIf="lblServiceList != ''">
+    <div class="text-center border border-dark">
+        <h3 class="fw-bold" >Service Details</h3>
+    </div>
+    <table class="table table-logix">
+        <thead>
+        <tr>
+            <th>S#</th>
+            <th>Description</th>
+            <th>Date</th>
+            <th>Qty</th>
+            <th>Amount</th>
+            <th>Total</th>
+          
+        </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let item of lblServiceList index as index">
+                <td class="text-center">{{index+1}}</td>
+                <td>{{item.serviceTitle}}</td>
+                <td>{{item.serviceDate |date:'short'}}</td>
+                <td class="text-center">{{item.quantity |number}}</td>
+                <td class="text-end"> {{item.amountCharged |number:'1.0-0'}}</td>
+                <td class="text-end">{{item.amountCharged * item.quantity |number:'1.0-0'}}</td>
+               
+                
+            </tr>
+            <tr>
+                <td class="fw-bold" colspan="4">Total</td>
+                <td class="fw-bold text-end" >{{lblServicesAmount |number:'1.0-0'}}</td>
+                <td></td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<div *ngIf="paymentHistoryList != ''">
+    <div class="text-center border border-dark">
+        <h3 class="fw-bold">Payment Details</h3>
+    </div>
+
+    <table class="table table-logix">
+  
+        <thead>
+           <tr>
+            <th>S#</th>
+            <th>Inv #</th>
+            <th>Date</th>
+            <th class="col-lg-4">Remarks</th>
+            <th>Amount</th>
+           </tr>
+            
+        </thead>
+        <tbody>
+            <tr *ngFor="let item of paymentHistoryList index as index">
+                <td class="text-center">{{index+1}}</td>
+                <td class="text-center">{{item.invoiceNo}}</td>
+                <td>{{item.paymentDate |date:'yyyy-MM-dd'}}</td>
+                <td>{{item.cioRemarks}}</td>
+                <td class="text-end">{{item.paymentAmount | number:'1.0-0'}}</td>
+                
+            </tr>
+            <tr>
+                <td colspan="4"></td>
+                <th class="text-end">{{paymentAmountTotal |number:'1.0-0'}}</th>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+
+
+
+
+   
+    <span class="w-100 text-end row border-bottom border-dark mb-1 ">
+        <h4 class="w-75 fw-bold border-dark">Total</h4>
+        <h4 class="w-25 text-end">{{lblRentPerDay * lblTotalDays + lblServicesAmount |number:'1.0-0'}}</h4>
+    </span>
+
+   
+
+    <span class="w-100 text-end row border-bottom border-dark mb-1" *ngIf="lblActiveStatus == false" >
+        <h4 class="w-75 fw-bold border-dark">Discount</h4>
+        <h4 class="w-25 text-end">{{lblDiscount|number:'1.0-0'}}</h4>
+    </span>
+
+    <span class="w-100 text-end row  border-bottom border-dark mb-1" *ngIf="lblActiveStatus == false">
+        <h4 class="w-75 fw-bold border-dark">Net Total</h4>
+        <h4 class="w-25 text-end">{{(lblRentPerDay * lblTotalDays + lblServicesAmount) - lblDiscount|number:'1.0-0'}}</h4>
+    </span>
+
+    <span class="w-100 text-end row border-bottom border-dark mb-1" *ngIf="lblActiveStatus == true" >
+        <h4 class="w-75 fw-bold border-dark">Received</h4>
+        <h4 class="w-25 text-end">{{paymentAmountTotal|number:'1.0-0'}}</h4>
+    </span>
+    
+</div>

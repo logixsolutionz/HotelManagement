@@ -1,0 +1,152 @@
+
+.title{
+    text-transform: uppercase;
+    text-align: center;
+    letter-spacing: 5px;
+    font-size: 40px;
+    line-height: 40px;
+    padding-bottom: 20px;
+    color: black;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+ .card-height{
+  height: 100px;
+ }
+
+//  mat-icon{
+//   height: 50px;
+//   width: 50px;
+//    font-size: 30px;
+//  }
+
+ .digitalFont{
+  font-family:  'digital' !important;
+ }
+
+ .cardIcon{
+  border-radius: 50px !important;
+   width: 50px ;
+    height: 50px;
+    color: white;
+    margin-top: 5px;
+ }
+
+ .cardText{
+  margin-top: 10px;
+  margin-left: 10px;
+  h6{
+    font-size: 12px;
+    font-weight: bold;
+    color: rgb(115, 114, 115);
+  }
+  p{
+    font-family:  'digital';
+    font-size: 40px;
+  }
+ }
+
+ .maticon{
+  margin-top: 11px ;
+  font-size: 30px;
+  height: 50px;
+  width: 50px;
+   }
+
+
+   .btblbtn{
+    width: 120px;
+     height: 90px;
+    //  border-radius: 5px;
+     text-align: center;
+    //  justify-content:right;
+     font-weight: bold;
+     font-size: 15px;
+     margin: 10px;
+     border: 1px solid Black;
+     font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+     mat-icon{
+      font-size: 20px !important;
+      text-align: center;
+      justify-content: center;
+     }
+   
+   }
+
+   .bookingTbl{
+    height: 450px !important;
+    padding: 0px 15px 15px 15px ;
+    // margin:0px 15px 15px 15px  ;
+    
+    overflow: scroll;
+   }
+
+ 
+
+   .statusTbl{
+
+    width: 100%;
+  
+    //  td{
+    //   // border:1px solid Black;
+    //   text-align: center;
+   
+    //   // background-color: orange;
+      
+    // }
+
+   }
+
+
+   .dateCard{
+    width:35px;
+     height:35px;
+     text-align: center;
+     justify-content: center;
+     align-items: center;
+   }
+
+
+   .eColor{
+    // background-color: white;
+    color: rgb(255, 7, 7);
+   }
+
+   .bColor{
+    // background-color: rgb(100, 243, 5);
+    color: rgb(253, 236, 1);
+   }
+   .cColor{
+    // background-color: rgb(5, 147, 242);
+    color: rgb(3, 20, 255);
+   }
+
+
+   .fixedrow {
+    // background: white;
+    position: sticky;
+    top: 128px;
+    z-index: 100;
+    // box-shadow: 0 2px 2px -1px rgba(0, 0, 0, 0.4);
+  }
+
+
+  .emptyBtn{
+    background-color:  white;
+  }
+
+  .checkInBtn{
+    background-color:  greenyellow;
+  }
+
+  .cleanBtn{
+    background-color:  rgb(243, 194, 87);
+  }
+
+  .outOfOrderBtn{
+    background-color:  rgb(247, 3, 3);
+  }
+
+  .personalUseBtn{
+    background-color:  rgb(9, 135, 246);
+  }

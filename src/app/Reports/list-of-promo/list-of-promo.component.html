@@ -1,0 +1,70 @@
+<div style="background-color: rgb(245, 245, 245);" class="h-100">
+    <div class="container pt-4 ">
+        <div class="container-fluid p-2  ">
+      
+            <button class="btn btn-primary" (click)="print()"><mat-icon>print</mat-icon></button>
+        </div>
+        
+        <div id="printRpt">
+        
+       <!-------------------------    Top Logo Section -------------------->
+               <div class="hide">
+                <div class="text-center border-bottom d-flex justify-content-between pb-1">
+                    <span>
+                        <img src="{{logo}}"  alt="" srcset="" height="100"
+                            width="100">
+                    </span>
+                    <span >
+                        
+    
+                        <h1 class="companyName">{{CompanyName}}</h1>
+                        <p style="margin-top: -15px;" class="companyName2">{{CompanyName2}}</p>
+    
+                        <p class="rptTitle" style="margin-top: -25px;">List Of Promo's</p>
+                    </span>
+                    <span>
+                        <img src="{{logo1}}" style="color: black;" alt="" srcset="" height="100"
+                            width="100">
+                    </span>
+            
+            
+                </div>
+               </div>
+           
+            <div class="pt-4">
+                <table class="table table-logix">
+                    <thead>
+                        <tr>
+                            <th>S#</th>
+                        <th>Title</th>
+                        <th>Code</th>
+                        <th>Percentage</th>
+                        <th>Remarks</th>
+
+                      
+                        </tr>
+                        
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let item of promoList;index as index">
+                            <td class="text-center">{{index+1}}</td>
+                            <td>{{item.promoTitle}}</td>
+                            <td>{{item.promoCode}}</td>
+                            <td class="text-center">{{item.discountPercentage}}%</td>
+                            <td>{{item.promoDescription}}</td>
+                            
+        
+                        </tr>
+                        <tr *ngIf="partyList == ''" class="text-center">
+                            <td colspan="6">No Data Available</td>
+                        </tr>
+                    </tbody>
+                </table>
+        
+            </div>
+        </div>
+    </div>
+</div>
+
+
+

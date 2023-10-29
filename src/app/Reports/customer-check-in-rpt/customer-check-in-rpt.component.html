@@ -1,0 +1,111 @@
+<div class="container-fluid">
+    <!----------------           Date Section ------------------------------->
+    <div class="row  p-2">
+
+        <mat-form-field class="col-lg-2 " appearance="outline">
+            <mat-label>Select Country</mat-label>
+            <mat-select [(ngModel)]="countryName">
+                <mat-option><ngx-mat-select-search [(ngModel)]="countrySearch"
+                    [placeholderLabel]="'Search...'" [noEntriesFoundLabel]="'Not found'"
+                    name="search"></ngx-mat-select-search></mat-option>
+                <mat-option *ngFor="let item of countryList |filter:countrySearch" [value]="item.countryName">{{item.countryName}}</mat-option>
+            </mat-select>
+        </mat-form-field>
+
+
+        <mat-form-field class="col-lg-2 " appearance="outline">
+            <mat-label>Select City</mat-label>
+            <mat-select [(ngModel)]="cityName">
+                <mat-option><ngx-mat-select-search [(ngModel)]="citySearch"
+                    [placeholderLabel]="'Search...'" [noEntriesFoundLabel]="'Not found'"
+                    name="search"></ngx-mat-select-search></mat-option>
+                <mat-option *ngFor="let item of citiesList |filter:citySearch" [value]="item.cityName">{{item.cityName}}</mat-option>
+            </mat-select>
+        </mat-form-field>
+
+
+
+        <mat-form-field class="col-lg-2 " appearance="outline">
+            <mat-label>From Date</mat-label>
+            <input matInput type="text" readonly="true" [(ngModel)]="fromDate" [matDatepicker]="sDate">
+            <mat-datepicker-toggle matSuffix [for]="sDate"></mat-datepicker-toggle>
+            <mat-datepicker #sDate></mat-datepicker>
+        </mat-form-field>
+
+        <mat-form-field class="col-lg-2" appearance="outline">
+            <mat-label>To Date</mat-label>
+            <input matInput type="text" readonly="true" [(ngModel)]="toDate" [matDatepicker]="eDate">
+            <mat-datepicker-toggle matSuffix [for]="eDate"></mat-datepicker-toggle>
+            <mat-datepicker #eDate></mat-datepicker>
+        </mat-form-field>
+
+
+        <div class="col-lg-4 d-flex text-end">
+            <button class=" btn btn-success w-50 me-2 btn-rpt" (click)="getReport('all')">Overall Report</button>
+            <button class=" btn btn-success w-50 me-2 btn-rpt" (click)="getReport('country')">CountryWise</button>
+            <button class=" btn btn-success w-50 me-2 btn-rpt" (click)="getReport('city')">CityWise</button>
+            <!-- <button class=" btn btn-success me-2 btn-rpt" (click)="getReport2()">Report 2</button> -->
+            <button class=" btn btn-primary me-2 btn-rpt" (click)="print()"> Print</button>
+        </div>
+    </div>
+
+    <div id="printDiv">
+
+         <!-------------- logo Section ----------------->
+
+         <div class="hide">
+            <div class="text-center d-flex justify-content-between">
+                <span>
+                    <img src="{{logo}}" style="color: black;" alt="" srcset="" height="100" width="100">
+                </span>
+                <span >
+                    
+
+                    <h1 class="companyName">{{CompanyName}}</h1>
+                    <p style="margin-top: -15px;" class="companyName2">{{CompanyName2}}</p> 
+                    <p class="rptTitle" style="margin-top:-25px">Customer Check In Detail Report</p>     
+                    <p style="margin-top:-20px"><b>From:</b> {{fromDate | date:'yyyy-MM-dd'}} <b>To:</b> {{toDate | date:'yyyy-MM-dd'}}</p>
+                  
+                </span>
+                <span>
+                    <img src="{{logo1}}" style="color: black;" alt="" srcset="" height="100" width="100">
+                </span>
+
+
+            </div>
+        </div>
+        <hr>
+
+        <table class="table table-logix">
+            <thead>
+                <tr>
+                    <th rowspan="2">S#</th>
+                    <th  rowspan="2">Name</th>
+                    <th  rowspan="2">Country</th>
+                    <th  rowspan="2">City</th>
+                    <th  rowspan="2" class="col-lg-3">Address</th>
+                    <th  rowspan="2">Mobile no</th>
+                    <th  colspan="2">Check In</th>
+                </tr>
+               <tr>
+               
+                <th >Periodic</th>
+                <th >Total</th>
+               </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let item of ReportData index as index">
+                    <td class="text-center">{{index+1}}</td>
+                    <td>{{item.partyName}}</td>
+                    <td>{{item.countryName}}</td>
+                    <td>{{item.cityName}}</td>
+                    <td>{{item.partyAddress}}</td>
+                    <td>{{item.partyMobileNo}}</td>
+                    <td class="text-center">{{item.periodicCheckIn}}</td>
+                    <td class="text-center">{{item.totalCheckIn}}</td>
+                </tr>
+            </tbody>
+        </table>
+
+    </div>
+</div>

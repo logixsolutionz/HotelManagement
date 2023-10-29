@@ -1,0 +1,78 @@
+<div class="container-fluid">
+    <div class="d-flex justify-content-between cursorPointer p-2 border-bottom">
+        <p class="dialogueTitle">ADD SERVICES</p>
+        <mat-icon (click)="closeDialogue()">cancel</mat-icon>
+    </div>
+
+    <div>
+        <mat-form-field appearance="outline" class="w-100 p-2">
+            <mat-label>Select Service</mat-label>
+            <mat-select [(ngModel)]="serviceID"  (selectionChange)="onServiceChange()">
+                <mat-option><ngx-mat-select-search [(ngModel)]="serviceSearch" [placeholderLabel]="'Search...'" [noEntriesFoundLabel]="'Not found'"></ngx-mat-select-search></mat-option>
+                <mat-option *ngFor="let item of servicesList |filter:serviceSearch" [value]="item.serviceID">{{item.serviceTitle}} </mat-option>
+            </mat-select>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="w-50 p-2">
+            <mat-label>Amount</mat-label>
+            <input type="number"    matInput [(ngModel)]="amountCharged"  />
+            
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="w-50 p-2">
+            <mat-label>Quantity</mat-label>
+            <input type="number"    matInput [(ngModel)]="quantity"  />
+            
+          </mat-form-field>
+
+          <mat-form-field class="w-50  p-2" appearance="outline">
+            <mat-label>Service Date</mat-label>
+            <input readonly="true" matInput    [(ngModel)]="serviceDate"
+                [matDatepicker]="serDate" >
+            <mat-datepicker-toggle matSuffix [for]="serDate"></mat-datepicker-toggle>
+            <mat-datepicker #serDate></mat-datepicker>
+        </mat-form-field>
+
+
+          <mat-form-field appearance="outline" class="w-50 p-2">
+            <mat-label>Service time</mat-label>
+            <input type="time"    matInput [(ngModel)]="serviceTime" name="week" min="00:00:00" max="24:00:00"  />
+            
+          </mat-form-field>
+
+          <div class="text-center"><button class="btn btn-success btn-save  me-2" (click)="addService()">Save</button>
+            <button class="btn btn-danger btn-reset " (click)="reset()">Reset</button></div>
+
+    </div>
+    <hr>
+
+    <div>
+        
+        <table class="table">
+            <thead>
+                <th>S#</th>
+                <th>Title</th>
+                <th>Charges</th>
+                <th>Qty</th>
+                <th>Charged</th>
+                <th>Total</th>
+                <th>Date</th>
+                <th>Del</th>
+            </thead>
+            <tbody>
+                <tr *ngFor="let item of savedServicesList index as index">
+                    <td>{{index+1}}</td>
+                    <td>{{item.serviceTitle}}</td>
+                    <td>{{item.serviceCharges |number:'1.0-0'}}</td>
+                    <td>{{item.quantity |number:'1.0-0'}}</td>
+                    <td>{{item.amountCharged |number:'1.0-0'}}</td>
+                    <td>{{item.amountCharged * item.quantity |number:'1.0-0'}}</td>
+                    <td>{{item.serviceDate |date:'short'}}</td>
+                    <td class="text-danger cursorPointer" (click)="deleteService(item)"><mat-icon>delete</mat-icon></td>
+                   
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+</div>

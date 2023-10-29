@@ -1,0 +1,81 @@
+<div class="container-fluid">
+    <!----------------           Date Section ------------------------------->
+    <div class="row  p-2">
+
+
+        <mat-form-field class="col-lg-4 " appearance="outline">
+            <mat-label>From Date</mat-label>
+            <input matInput type="text" readonly="true" [(ngModel)]="fromDate" [matDatepicker]="sDate">
+            <mat-datepicker-toggle matSuffix [for]="sDate"></mat-datepicker-toggle>
+            <mat-datepicker #sDate></mat-datepicker>
+        </mat-form-field>
+
+        <mat-form-field class="col-lg-4" appearance="outline">
+            <mat-label>To Date</mat-label>
+            <input matInput type="text" readonly="true" [(ngModel)]="toDate" [matDatepicker]="eDate">
+            <mat-datepicker-toggle matSuffix [for]="eDate"></mat-datepicker-toggle>
+            <mat-datepicker #eDate></mat-datepicker>
+        </mat-form-field>
+
+
+        <div class="col-lg-4 d-flex text-end">
+            <button class=" btn w-50 btn-success me-2 btn-rpt" (click)="getReport()">Get Report</button>
+            <!-- <button class=" btn btn-success me-2 btn-rpt" (click)="getReport2()">Report 2</button> -->
+            <button class=" btn btn-primary me-2 btn-rpt" (click)="print()"> Print</button>
+        </div>
+    </div>
+
+    <div id="printDiv">
+
+        <!-------------- logo Section ----------------->
+
+        <div class="hide">
+           <div class="text-center border-bottom d-flex justify-content-between">
+               <span>
+                   <img src="{{logo}}" style="color: black;" alt="" srcset="" height="100" width="100">
+               </span>
+               <span >
+                   
+
+                   <h1 class="companyName">{{CompanyName}}</h1>
+                   <p style="margin-top: -15px;" class="companyName2">{{CompanyName2}}</p>      
+                   <p class="rptTitle" style="margin-top:-25px">Room Income Report</p>
+                   <p style="margin-top:-20px"><b>From:</b> {{fromDate | date:'yyyy-MM-dd'}} <b>To:</b> {{toDate | date:'yyyy-MM-dd'}}</p>
+                 
+               </span>
+               <span>
+                   <img src="{{logo1}}" style="color: black;" alt="" srcset="" height="100" width="100">
+               </span>
+
+
+           </div>
+       </div>
+<hr>
+       <table class="table table-logix">
+        <thead>
+           <tr>
+            <th>S#</th>
+            <th>Room Title</th>
+            <th>Room Status</th>
+            <th>Total Income</th>
+            <th>Estimated Income</th>
+           </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let item of ReportData index as index">
+                <td class="text-center">{{index+1}}</td>
+                <td>{{item.roomTitle}}</td>
+                <td>{{item.roomCrntStatus}}</td>
+                <td class="text-end">{{item.totalIncome |number:'0.0-0'}}</td>
+                <td class="text-end">{{item.rentPerDay|number:'0.0-0'}} x {{DaysInMonth}} = {{item.rentPerDay * DaysInMonth |number:'0.0-0'}}</td>
+            </tr>
+            <tr>
+                <td class="text-center fw-bold" colspan="3">Total</td>
+                <td class="text-end fw-bold">{{totalIncomeTotal |number:'0.0-0'}}</td>
+                <td class="text-end fw-bold">{{estimatedIncomeTotal |number:'0.0-0'}}</td>
+            </tr>
+        </tbody>
+       </table>
+
+   </div>
+</div>

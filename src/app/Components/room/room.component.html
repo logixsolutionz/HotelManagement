@@ -1,0 +1,43 @@
+<div class="bg-white p-5">
+    
+    <div class="text-center p-5 bg-light  pt-5">
+        <div class="text-start d-flex ">
+            <button autofocus class="btn btn-primary me-2 col-lg-2" style="height: 55px;" (click)="OpenDialogue()"><mat-icon class="pt-1">
+            add</mat-icon>ADD Room</button>
+            <mat-form-field class="col-lg-10" appearance="outline">
+                <mat-label>Search</mat-label>
+                <input [(ngModel)]="searchtxt" matInput type="text">
+            </mat-form-field>
+        </div>
+            <br>
+        <table class="table table-hover h-100"> 
+            <thead>
+                <th>S#</th>
+                <th>Room Title</th>
+                <th>Room Code</th>
+                <th>Floor Name</th>
+                <th>Category Name</th>
+                <th>Rent /Day </th>
+                <th>Edit</th>
+                <th>Delete</th>
+            </thead>
+            <tbody >
+                <tr *ngFor="let item of RoomData|filter:searchtxt index as index">
+
+                    <td>{{index+1}}</td>
+                    <td>{{item.roomTitle}}</td>
+                    <td>{{item.roomCode}}</td>
+                    <td>{{item.floorName}}</td>
+                    <td>{{item.categoryName}}</td>
+                    <td>{{item.rentPerDay | number}}</td>
+                    <td><mat-icon class="text-success cursorPointer" (click)="editRoom(item)">edit</mat-icon></td>
+                    <td><mat-icon class="text-danger cursorPointer" (click)="deleteRoom(item)">delete</mat-icon></td>
+                </tr>
+               
+            </tbody>
+        </table>
+    
+    </div>
+
+</div>
+

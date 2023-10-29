@@ -1,0 +1,37 @@
+<div >
+
+    <div class="text-center  mt-3 d-flex justify-content-between p-3"><p class="dialogueTitle">ADD CREDENTIALS</p><mat-icon class="cursorPointer" (click)="closeDialogue()">cancel</mat-icon></div>
+
+    <div class="text-center container-fluid " >
+        <mat-form-field class="w-100" appearance="outline">
+        <mat-label>Enter Advance Amount</mat-label>
+        <input matInput type="number" [disabled]="bookingStatus == 'Confirmed'" [(ngModel)]="advanceAmount">
+        </mat-form-field>
+
+        <mat-form-field class="w-100" appearance="outline">
+            <mat-label>Date</mat-label>
+            <input readonly="true" matInput    [(ngModel)]="Date"
+                [matDatepicker]="CDate" >
+            <mat-datepicker-toggle matSuffix [for]="CDate"></mat-datepicker-toggle>
+            <mat-datepicker #CDate></mat-datepicker>
+        </mat-form-field>
+
+        <mat-form-field class="w-100" appearance="outline">
+            <mat-label>Select COA</mat-label>
+            <mat-select [(ngModel)]="coaID">
+                <mat-option [disabled]="item.coaTitle == 'Cash In Hand'" *ngFor="let item of coaList" [value]="item.coaID">{{item.coaTitle}} </mat-option>
+            </mat-select>
+        </mat-form-field>
+
+        <mat-form-field class="w-100" appearance="outline">
+            <mat-label>Description</mat-label>
+            <textarea matInput  [(ngModel)]="remarks"></textarea>
+            </mat-form-field>
+
+        
+    </div>
+    <div class="justify-content-center d-flex" >
+        <button class="btn btn-success btn-save m-1" accesskey="s" (click)="save()"> {{actionBtn}} </button>
+        <button class="btn btn-danger btn-reset m-1 "  (click)="reset()"> Reset </button>
+    </div>
+</div>

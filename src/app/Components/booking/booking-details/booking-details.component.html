@@ -1,0 +1,131 @@
+<div class="container">
+
+    <div class="d-flex justify-content-between pt-2 border-bottom">
+        <h1>Booking Details</h1>
+        <mat-icon class="cursorPointer" (click)="closeDialogue()">cancel</mat-icon>
+    </div>
+
+
+        <div class="d-flex">
+            <div class="row"  >
+
+                <span class="w-50 row ">
+                    <h5 class="w-50 fw-bold border-dark">Booking No :</h5>
+                    <p class="w-50">{{lblBookingNo}}</p>
+                </span>
+
+                <span class="w-50 row ">
+                    <h5 class="w-50 fw-bold">Booking Date :</h5>
+                        <p class="w-50">{{lblBookingDate |date:'yyyy-MM-dd'}}</p>
+                </span >
+
+                <span class="w-50 row" *ngIf="lblBookingStatus === 'Confirmed' || lblBookingStatus === 'Refunded'|| lblBookingStatus === 'Visited'">
+                    <h5 class="w-50 fw-bold">Advance Voucher # :</h5>
+                    <p class="w-50">{{lblAdvanceJvNo}}</p>
+                </span>
+
+                <span class="w-50 row" *ngIf="lblBookingStatus === 'Refunded'" >
+                    <h5 class="w-50 fw-bold">Refund Voucher # :</h5>
+                    <p class="w-50">{{lblRefundJvNo}}</p>
+                </span>
+
+                <span class="w-50 row">
+                    <h5 class="w-50  fw-bold">Booking Status :</h5>
+                        <p class="w-50">{{lblBookingStatus}}</p>
+                </span>
+               
+                <span class="w-50 row">
+                    <h5 class="w-50 fw-bold">Booking Through :</h5>
+                    <p class="w-50">{{lblBookingChannel}}</p>
+                </span>
+
+                <span class="w-50 row">
+                    <h5 class="w-50 fw-bold">Customer Name :</h5>
+                        <p class="w-50">{{lblCustomerName}}</p>
+                </span>
+
+                <span class="w-50 row">
+                    <h5 class="w-50 fw-bold">Customer CNIC :</h5>
+                        <p class="w-50">{{lblPartyCNIC}}</p>
+                </span>
+
+                <span class="w-50 row">
+                    <h5 class="w-50 fw-bold">Arrival Date :</h5>
+                        <p class="w-50">{{lblArrivalDate |date:'yyyy-MM-dd'}}</p>
+
+                </span>
+                <span class="w-50 row">
+                    <h5 class="w-50 fw-bold">Arrival Time :</h5>
+                        <p class="w-50">{{lblArrivalTime}}</p>
+
+                </span>
+
+                <span class="w-50 row">
+                    <h5 class="w-50 fw-bold">Departure Date :</h5>
+                        <p class="w-50">{{lblDepartureDate |date:'yyyy-MM-dd'}}</p>
+                </span>
+                <span class="w-50 row">
+                    <h5 class="w-50 fw-bold">Departure Time :</h5>
+                        <p class="w-50">{{lblDepartureTime}}</p>
+                </span>
+
+                <span class="w-50 row"> 
+                    <h5 class="w-50 fw-bold">Confirmation Date :</h5>
+                    <p class="w-50">{{lblConfirmationDate |date:'yyyy-MM-dd'}}</p>
+                </span>
+
+                <span class="w-50 row" *ngIf="lblReference == ''"> 
+                    <h5 class="w-50 fw-bold">Reference :</h5>
+                    <p class="w-50">{{lblReference }}</p>
+                </span>
+
+                <span class="w-50 row" *ngIf="lblPersons != 0"> 
+                    <h5 class="w-50 fw-bold">Persons :</h5>
+                    <p class="w-50">{{lblPersons }}</p>
+                </span>
+
+                <span class="w-50 row">
+                    <h5  class="w-50 fw-bold">Remarks :</h5>
+                    <p class="w-50">{{lblBookingRemarks}}</p>
+                </span>
+
+
+            </div>
+            
+           </div>
+           <hr>
+
+           <!-----------------------   Print Table Area --------------------->
+
+           <div>
+            <table class="table table-logix">
+                <thead>
+                    
+                    <tr>
+                    <th>Description</th>
+                    <th>Rent</th>
+                    <th>Days</th>
+                    <th>Total Rent</th>
+                    <th>Advance</th>
+                    <th>Remaining</th>
+                    </tr>
+                    
+                
+                </thead>
+
+                <tbody>
+                    <tr>
+                        <td>{{lblRoomTitle}}</td>
+                        <td class="text-end">{{lblRentPerDay |number:'1.0-0'}}</td>
+                        <td class="text-center">{{lblTotalDays}}</td>
+                        <td class="text-end">{{lblTotalDays * lblRentPerDay |number:'1.0-0'}}</td>
+                        <td class="text-end"> {{lblPaidAmount |number:'1.0-0'}}</td>
+                        <td class="text-end">{{(lblTotalDays * lblRentPerDay) -lblPaidAmount |number:'1.0-0'}}</td>
+                    </tr>
+                </tbody>
+               
+            </table>
+           </div>
+
+  
+</div>

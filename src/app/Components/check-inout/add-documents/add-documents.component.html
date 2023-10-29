@@ -1,0 +1,59 @@
+<div class="container-fluid p-4">
+    <div class="d-flex justify-content-between cursorPointer p-2 border-bottom">
+        <p class="dialogueTitle">ADD DOCUMENTS</p>
+        <mat-icon (click)="closeDialogue()">cancel</mat-icon>
+    </div>
+
+    <div>
+
+        <mat-form-field appearance="outline" class="w-100 p-2">
+            <mat-label>Enter Document Title</mat-label>
+            <mat-select [(ngModel)]="documentTitle">
+                <mat-option *ngFor="let item of titleList" [value]="item.title">{{item.title}}</mat-option>
+            </mat-select>
+        </mat-form-field>
+       
+        <span class="w-100 row p-2">
+            <button type="button" mat-raised-button (click)="fileInput.click()">Choose File</button>
+            <input hidden accept=".pdf" [(ngModel)]="fileName"  (change)="onFileSelected($event)" #fileInput type="file" id="file"  class="border border-dark">
+            <p class="text-center text-secondary mt-1 border-bottom">{{fileName}}</p>
+            <mat-hint class="text-danger">File Must be PDF Only</mat-hint>
+        </span>
+
+
+        <mat-form-field appearance="outline" class="w-100 p-2">
+            <mat-label>Description</mat-label>
+            <textarea matInput type="text" [(ngModel)]="description"></textarea>
+        </mat-form-field>
+
+        <div class="text-center">
+            <button class="btn btn-success btn-save me-2" style="height: 55px;width: 100px;" (click)="insertDocument()">Save</button>
+            <button class="btn btn-danger btn-reset" style="height: 55px;width: 100px;" (click)="reset()">Reset</button>
+        </div>
+
+    </div>
+    <hr>
+
+    <div>
+        <table class="table">
+            <thead>
+                <th>S#</th>
+                <th>Title</th>
+                <th>Description</th>
+                <th>View</th>
+                <th>del</th>
+
+            </thead>
+            <tbody>
+                <tr *ngFor="let item of documentsList index as index">
+                    <td>{{index +1}}</td>
+                    <td>{{item.docTitle}}</td>
+                    <td>{{item.comments}}</td>
+                    <td class="cursorPointer text-success" (click)="downloadFile(item)"><mat-icon>remove_red_eye</mat-icon></td>
+                    <td class="cursorPointer text-danger" (click)="deleteDocument(item)"><mat-icon>delete</mat-icon></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+</div>

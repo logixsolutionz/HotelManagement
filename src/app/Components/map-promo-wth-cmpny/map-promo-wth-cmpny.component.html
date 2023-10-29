@@ -1,0 +1,65 @@
+<div class="bg-white p-5">
+    
+    <div class="text-center p-5 bg-light  pt-5">
+        <div class="text-start d-flex ">
+            <button mat-raised-button autofocus class="bg-primary text-white me-2 col-lg-2" style="height: 55px;" (click)="OpenDialogue()"><mat-icon >
+            add</mat-icon>MAP PROMO</button>
+            <mat-form-field class="col-lg-10" appearance="outline">
+                <mat-label>Search</mat-label>
+                <input [(ngModel)]="searchtxt" matInput type="text">
+            </mat-form-field>
+        </div>
+            <br>
+        <table class="table table-hover h-100"> 
+            <thead>
+                <th>S#</th>
+                <th>Promo Title</th>
+                <th>Company Name</th>
+                <th>Start Date</th>
+                <th>End Date</th>
+                <th>Discount %</th>
+                <th>InActive</th>
+ 
+                <th>Delete</th>
+            </thead>
+            <tbody >
+                <tr *ngFor="let item of companyPromoList|filter:searchtxt |paginate:{ id:'voucherData', itemsPerPage : tableSize,currentPage : page, totalItems : count, } index as index" >
+
+                    <td>{{index+1}}</td>
+                    <td>{{item.promoTitle}}</td>
+                    <td>{{item.companyName}}</td>
+                    <td>{{item.promoStartDate | date:'dd-MM-yyyy'}}</td>
+                    <td>{{item.promoEndDate | date:'dd-MM-yyyy'}}</td>
+                    <td>{{item.discountPercentage}}%</td>
+                    <td><button mat-mini-fab *ngIf="item.activeStatus == false" class="bg-secondary" ><mat-icon>indeterminate_check_box</mat-icon></button>
+                    <button mat-mini-fab *ngIf="item.activeStatus == true" class="bg-success" (click)="inActiveCompanyPromo(item)"><mat-icon>indeterminate_check_box</mat-icon></button></td>
+                   
+                    <td><button mat-mini-fab class="bg-danger" (click)="deleteCompanyPromo(item)"><mat-icon>delete</mat-icon></button></td>
+
+                 
+             
+                </tr>
+               
+            </tbody>
+        </table>
+
+        <div class="d-flex" >
+            <mat-hint class="me-1 text-secondary">Total Rows : ({{companyPromoList.length}})    </mat-hint>
+            <pagination-controls
+            previousLabel="Prev"
+            nextLabel="Next"
+            (pageChange)="onTableDataChange($event)"
+            ></pagination-controls>
+            
+
+            <mat-hint class=" me-1 text-secondary">Rows Per Page </mat-hint>
+            <select class="text-white" style="width: 50px; height: 25px;background-color: rgb(75, 164, 248);" (change)="onTableSizeChange($event)">
+                <option *ngFor=" let item of tableSizes">{{item}}</option>
+            </select>
+            
+        </div>
+    
+    </div>
+
+</div>
+

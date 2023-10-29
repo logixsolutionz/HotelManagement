@@ -1,0 +1,36 @@
+<div>
+
+    <div class=" mt-3 d-flex justify-content-between p-3">
+        <p class="dialogueTitle ">ADD RATE TYPE DETAILS</p><mat-icon class="cursorPointer" (click)="closeDialogue()">cancel</mat-icon>
+    </div>
+
+    <div class="text-center container-fluid ">
+        <mat-form-field class="w-100" appearance="outline">
+            <mat-label>Rate Title</mat-label>
+            <input matInput type="text" [(ngModel)]="promoTitle">
+        </mat-form-field>
+        <mat-form-field class="w-100" appearance="outline">
+            <mat-label>Service Code</mat-label>
+            <input matInput id="serviceCode"  type="text" [(ngModel)]="promoCode">
+        </mat-form-field>
+        <mat-form-field class="w-100" appearance="outline">
+            <mat-label>Discount Percentage</mat-label>
+            <input matInput type="number" [(ngModel)]="promoDiscountPercentage">
+        </mat-form-field>
+        <mat-form-field class="w-100" appearance="outline">
+            <mat-label>Description</mat-label>
+            <textarea matInput type="text" [(ngModel)]="Description"></textarea>
+        </mat-form-field>
+
+
+    </div>
+    <div class="justify-content-center d-flex">
+        <button class="btn btn-success btn-save m-1" accesskey="s" (click)="save()" ><mat-icon class="pt-1">save</mat-icon>
+            {{actionbtn}} </button>
+        <button class="btn btn-danger btn-reset m-1 " (click)="reset()"><mat-icon class="pt-1">cached</mat-icon> Reset </button>
+    </div>
+</div>
+
+
+
+
