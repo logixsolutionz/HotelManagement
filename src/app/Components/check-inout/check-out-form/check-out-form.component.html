@@ -29,16 +29,16 @@
 
         <mat-form-field class="w-50  p-2" appearance="outline">
             <mat-label>Check Out Date</mat-label>
-            <input readonly="true" matInput  [disabled]="this.roleID == 3"    [(ngModel)]="checkOutDate" (dateChange)="getTotalDays()"
+            <input readonly="true" matInput      [(ngModel)]="checkOutDate" (dateChange)="getTotalDays()"
                 [matDatepicker]="coDate" >
-            <mat-datepicker-toggle matSuffix [for]="coDate" [disabled]="this.roleID == 3"></mat-datepicker-toggle>
+            <mat-datepicker-toggle matSuffix [for]="coDate" ></mat-datepicker-toggle>
             <mat-datepicker #coDate></mat-datepicker>
         </mat-form-field>
 
 
         <mat-form-field appearance="outline" class="w-50 p-2">
             <mat-label>Check Out time</mat-label>
-            <input type="time"  [disabled]="this.roleID == 3" (change)="getTotalDays()"   matInput [(ngModel)]="checkOutTime" name="week" min="00:00:00" max="24:00:00"  />
+            <input type="time"   (change)="getTotalDays()"   matInput [(ngModel)]="checkOutTime" name="week" min="00:00:00" max="24:00:00"  />
             
           </mat-form-field>
 
@@ -57,7 +57,7 @@
 
         <mat-form-field appearance="outline" class="w-50 p-2">
             <mat-label>Total Days</mat-label>   
-            <input matInput readonly="true" (change)="getTotalDays()" type="number" min="1" [(ngModel)]="totalDays"  (keypress)="numberOnly($event)">
+            <input matInput (change)="getTotalDays()" type="number" min="1" [(ngModel)]="totalDays"  (keypress)="numberOnly($event)">
         </mat-form-field>
 
         <mat-form-field appearance="outline" class="w-50 p-2">

@@ -97,7 +97,7 @@
 
                         <mat-form-field appearance="outline" class="col-lg-3  p-2">
                             <mat-label>Enter Rent Per Day</mat-label>
-                            <input matInput [disabled]="RoleID == 3" type="number" min="0" [(ngModel)]="rentPerDay"
+                            <input matInput  type="number" min="0" [(ngModel)]="rentPerDay"
                                 (keypress)="numberOnly($event)">
 
                         </mat-form-field>
@@ -111,7 +111,7 @@
 
                         <mat-form-field appearance="outline" class="col-lg-3  p-2">
                             <mat-label>Total Days</mat-label>
-                            <input type="number" [disabled]="true" min="0" (keyup)="getTotal()" (keypress)="numberOnly($event)" matInput
+                            <input type="number"  min="0" (keyup)="getTotal()" (keypress)="numberOnly($event)" matInput
                                 [(ngModel)]="totalDays" />
 
                         </mat-form-field>
