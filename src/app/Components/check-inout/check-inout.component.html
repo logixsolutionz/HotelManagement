@@ -23,7 +23,7 @@
 
                         <mat-form-field appearance="outline" class="col-lg-3  p-2">
                             <mat-label>Select Promo </mat-label>
-                            <mat-select [disabled]="bookingID != 0" [(ngModel)]="companyPromoID" (selectionChange)="getTotal();onPromoChange()">
+                            <mat-select [disabled]="bookingID != 0" [(ngModel)]="companyPromoID" (selectionChange)="onPromoChange();getTotal()">
                                 <mat-option><ngx-mat-select-search [(ngModel)]="promoSearch"
                                         [placeholderLabel]="'Search...'"
                                         [noEntriesFoundLabel]="'Not found'"></ngx-mat-select-search></mat-option>
@@ -97,7 +97,7 @@
 
                         <mat-form-field appearance="outline" class="col-lg-3  p-2">
                             <mat-label>Enter Rent Per Day</mat-label>
-                            <input matInput  type="number" min="0" [(ngModel)]="rentPerDay"
+                            <input matInput  type="number" min="0" [(ngModel)]="rentPerDay" (keyup)="getTotal()"
                                 (keypress)="numberOnly($event)">
 
                         </mat-form-field>

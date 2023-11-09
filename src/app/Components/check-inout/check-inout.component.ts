@@ -208,6 +208,7 @@ export class CheckINOUtComponent implements OnInit {
 
 
     this.discountedRPD = (this.rentPerDay - (this.rentPerDay * this.discountPercentage)/100);
+    
 
   }
 
@@ -496,7 +497,8 @@ export class CheckINOUtComponent implements OnInit {
     }
     else if(this.advanceAmount > 0 && this.coaID == 0){
       this.msg.WarnNotify('Select Payment Head')
-    }else if(this.discountedRPD == 0 || this.discountedRPD == undefined){
+    }
+    else if((this.discountedRPD == 0 || this.discountedRPD == undefined) && this.companyPromoID != 0){
       this.msg.WarnNotify('Enter DRPD');
     }
     else{
