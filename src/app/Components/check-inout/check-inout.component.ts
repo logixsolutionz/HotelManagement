@@ -647,7 +647,7 @@ export class CheckINOUtComponent implements OnInit {
    //////////////////////////////////////////////////////////////
    
   getCheckInOutDetails(row:any){
-    // console.log(row);
+    console.log(row);
 
     this.lblVoucherNo = row.checkinoutID;
     this.lblBookingID = row.bookingID;

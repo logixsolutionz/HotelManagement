@@ -473,7 +473,7 @@
                             <p class="w-50">{{lblPartyCNIC }}</p>
                         </span>
                         <span class="w-50 row ">
-                            <h6 class="w-50 fw-bold border-dark">Customer CNIC:</h6>
+                            <h6 class="w-50 fw-bold border-dark">Mobile No:</h6>
                             <p class="w-50">{{lblPartyMobileno }}</p>
                         </span>
 
@@ -570,6 +570,11 @@
                     <h4 class="w-75 fw-bold ">Net Total</h4>
                     <h4 class="w-25 text-end">{{(lblRentPerDay * lblTotalDays + lblServicesAmount) -
                         lblDiscount|number:'1.0-0'}}</h4>
+                </span>
+
+                <span class="row text-end   border-bottom border-dark mb-1" >
+                    <h4 class="w-75 fw-bold ">Received</h4>
+                    <h4 class="w-25 text-end">{{lblAdvancePaid |number:'1.0-0'}}</h4>
                 </span>
 
 
