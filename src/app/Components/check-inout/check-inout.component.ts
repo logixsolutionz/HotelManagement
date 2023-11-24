@@ -588,12 +588,10 @@ export class CheckINOUtComponent implements OnInit {
       (Response:any)=>{
 
         this.savedVoucherList = Response;
-        console.log(Response);
+        //console.log(Response);
         this.checkInOutList = Response.filter((e:any)=>e.activeStatus == true);
         this.loadingBar = 'Stop';
-       
 
-       // console.log(Response);
         
       }
     )
@@ -647,7 +645,7 @@ export class CheckINOUtComponent implements OnInit {
    //////////////////////////////////////////////////////////////
    
   getCheckInOutDetails(row:any){
-    console.log(row);
+    //console.log(row);
 
     this.lblVoucherNo = row.checkinoutID;
     this.lblBookingID = row.bookingID;
