@@ -178,7 +178,12 @@
                         <th>Print</th>
                     </thead>
                     <tbody>
-                        <tr *ngFor="let item of SavedData | filter: searchBooking |paginate:{ id:'voucherData', itemsPerPage : tableSize,currentPage : page, totalItems : count, }   ; index as index">
+                        <tr *ngFor="let item of SavedData | filter: searchBooking |paginate:{
+                            itemsPerPage : tableSize,
+                            currentPage : page,
+                            totalItems :    count,
+                        }  ;  index as index">
+                        
                             <td>{{index+1}}</td>
                             <td>{{item.bookingID}}</td>
                             <td>{{item.bookingDate |date:'yyyy-MM-dd'}}</td>
