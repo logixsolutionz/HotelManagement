@@ -234,7 +234,7 @@ getCompanyDataFromStorage(){
         
        
        }else{
-        this.msg.WarnNotify('Error Occurred While Login Process');
+        this.msg.WarnNotify(value.msg);
         $('.loaderDark').fadeOut(500);
        }
       },

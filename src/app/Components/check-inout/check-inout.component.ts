@@ -589,7 +589,12 @@ export class CheckINOUtComponent implements OnInit {
 
         this.savedVoucherList = Response;
         //console.log(Response);
-        this.checkInOutList = Response.filter((e:any)=>e.activeStatus == true);
+        // this.checkInOutList = Response.filter((e:any)=>e.activeStatus == true);
+        if(this.voucherType == 'Check In'){
+          this.checkInOutList = this.savedVoucherList.filter((e:any)=>e.activeStatus == true);
+        }else if(this.voucherType == 'Check Out'){
+          this.checkInOutList = this.savedVoucherList.filter((e:any)=>e.activeStatus == false);
+        }
         this.loadingBar = 'Stop';
 
         
